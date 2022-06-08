@@ -5,7 +5,7 @@ import { Body, Container, Wrapper } from './style'
 import { HouseCard } from '../HouseCard'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSearch } from '../../Hooks/useSearch'
-import { message } from 'antd'
+
 
 
 
@@ -14,7 +14,7 @@ const { REACT_APP_BASE_URL: url } = process.env
 
 export const Propeties = () => {
   const [title, setTitle] = useState('Properties')
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
   const { search } = useLocation();
   const navigate = useNavigate()
   const query = useSearch()
@@ -23,9 +23,10 @@ export const Propeties = () => {
     if (!query.get('category_id')) {
       setTitle('Properties')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.get('category_id')])
 
-  
+
   useQuery(
     ['getHouses', search],
     () =>
@@ -58,24 +59,24 @@ export const Propeties = () => {
   const onClick = (id) => {
     navigate(`/properties/:${id}`)
   }
-  
+
   return (
     <div>
-        <Filter />
-        <Container>
-          <Wrapper className='nocopy'>
-          <div className=' title center'>{isLoading || isRefetching ? <div>Loading...</div> : title }</div>
-            <div className='description center'>
-              The Houses that You Want and dream!!!
-            </div>   
-          </Wrapper>
+      <Filter />
+      <Container>
+        <Wrapper className='nocopy'>
+          <div className=' title center'>{isLoading || isRefetching ? <div>Loading...</div> : title}</div>
+          <div className='description center'>
+            The Houses that You Want and dream!!!
+          </div>
+        </Wrapper>
 
-          <Body>
-            {data.map((value) => {
-              return <HouseCard onClick={()=>onClick(value?.id)} key={value.id} info={value} />
-            })}
-          </Body>
-        </Container>
+        <Body>
+          {data.map((value) => {
+            return <HouseCard onClick={() => onClick(value?.id)} key={value.id} info={value} />
+          })}
+        </Body>
+      </Container>
     </div>
   )
 }
