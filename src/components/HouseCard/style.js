@@ -14,7 +14,7 @@ export const Container = styled.div`
     flex-direction: column;
     width: 100%;
     min-width: 250px;
-    max-width: 380px;
+    max-width: 381px;
     height: 450px;
     background: #ffffff;
     margin: ${({ margin }) => margin && '0 1em'};
@@ -101,6 +101,13 @@ export const  Price = styled.div`
 `
 
 Price.Wrapper = styled(InfoWrapper)` 
+    /* position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border-top: 1px solid #e6e9ec; */
+
+    
     display: flex;
     justify-content: center;
     border: none;

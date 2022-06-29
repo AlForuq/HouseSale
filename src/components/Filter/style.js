@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Icon = styled.div`
-  margin-right: 8px;
+  /* margin-right: 8px; */
 `;
 // Icon.Price = styled(price)`
 //   margin-right: 8px;

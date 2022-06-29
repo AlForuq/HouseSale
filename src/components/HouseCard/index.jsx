@@ -5,11 +5,12 @@ import user from '../../assets/images/avatar1.png'
 import { Container, Icon, Image, Info, InfoWrapper, User, Price } from './style'
 
 export const HouseCard = ({info, mr, ml, margin, onClick}) => {
+    // console.log(info, 'info');
     return  (
         <Container mr={mr} ml={ml} margin={margin} onClick={onClick} >
-            <Image src={info?.attachments[0]?.imgPath || apart} />
+            <Image src={(info?.attachments && info?.attachments[0]?.imgPath) || apart} />
             
-            <InfoWrapper>
+            <InfoWrapper> 
                 <User>
                     <User.Img src={info?.user || user } />
                 </User>
@@ -24,7 +25,7 @@ export const HouseCard = ({info, mr, ml, margin, onClick}) => {
                 <Info.Details>
                     <Icon.Wrapper>
                         <Icon.Bed />
-                        <Info.Text>{info?.houseDetails?.bed || 0 } Beds </Info.Text>
+                        <Info.Text>{info?.houseDetails?.beds || 0 } Beds </Info.Text>
                     </Icon.Wrapper>
 
                     <Icon.Wrapper>
@@ -47,8 +48,8 @@ export const HouseCard = ({info, mr, ml, margin, onClick}) => {
 
             <Price>
                 <Price.Wrapper>
-                    <Price.Origin>{info?.salePrice || 0} / month</Price.Origin>
-                    <Price.Sale>{ info?.price || 0} / month</Price.Sale>
+                    <Price.Origin>${info?.salePrice || 0} / month</Price.Origin>
+                    <Price.Sale>${info?.price || 0} / month</Price.Sale>
                 </Price.Wrapper>
 
                 <Price.IconWrapper>

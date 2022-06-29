@@ -3,7 +3,25 @@ import AliceCarousel from 'react-alice-carousel'
 import { HouseCard } from '../../HouseCard'
 import { ArrowLeft, ArrowRight, Cards, Container, Wrapper } from './style'
 
+// import {useQuery} from 'react-query'
+
 export const Recomandation = () => {
+
+  // useQuery('', () => {
+  //   return fetch()
+   
+  // },
+  //   {
+  //     onSuccess: (res) => { console.log(res); }
+  //   })
+
+  // const req = useMutation(() => {
+  //   return fetch()
+  // }) 
+  
+  // req.mutate([], {
+  //   onSuccess: res => {}
+  // })
 
   const slider = useRef()
 
@@ -35,13 +53,17 @@ export const Recomandation = () => {
             mouseTracking
           />
 
-          <ArrowLeft onClick={() => slider.current?.slideNext()} >
-            &rang;
-          </ArrowLeft>
-
-          <ArrowRight onClick={()=> slider.current?.slidePrev()} >
+          <ArrowLeft onClick={() => slider.current?.slidePrev()} >
             &lang;
+          </ArrowLeft>
+          
+          <ArrowRight onClick={() => slider.current?.slideNext()} >
+            &rang;
           </ArrowRight>
+
+          
+
+          
           
           
 

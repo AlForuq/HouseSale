@@ -1,8 +1,11 @@
 import React from "react";
+import { AddNewPage } from "../pages/AddNew";
 import { DetailsPage } from "../pages/Details";
-import {Generic} from "../pages/generic";
+import { Generic } from "../pages/generic";
 import { HomePage } from "../pages/Home";
+import { MyPropertiesPage } from "../pages/MyProperties";
 import { ProperPage } from "../pages/Properties/index";
+import { SigninPage } from "../pages/Signin";
 
 
 export const navbar = [
@@ -19,7 +22,7 @@ export const navbar = [
         id: 2,
         title: "Properties",
         path: "/properties",
-        Element: <ProperPage/>,
+        Element: <ProperPage />,
         search: "?",
         hidden: false,
         private: false,
@@ -47,10 +50,11 @@ export const navbar = [
         id: 4,
         title: "Sign In",
         path: "/signin",
-        Element: <Generic />,
+        Element: <SigninPage />,
         search: "?",
         hidden: true,
         private: false,
+        param: true,
     },
     {
         id: 5,
@@ -60,5 +64,36 @@ export const navbar = [
         search: "?",
         hidden: true,
         private: false,
+        param: true,
+    },
+    {
+        id: 6,
+        title: "My Properties",
+        path: "/profile/properties",
+        Element: <MyPropertiesPage />,
+        search: "?",
+        hidden: true,
+        private: false,
+        param: true,
+    },
+    {
+        id: 7,
+        title: "Add House",
+        path: "/profile/add",
+        Element: <AddNewPage />,
+        search: "?",
+        hidden: true,
+        private: false,
+        param: true,
+    },
+    {
+        id: 8,
+        title: "Add House",
+        path: "/profile/add/:id",
+        Element: <AddNewPage />,
+        search: "?",
+        hidden: true,
+        private: false,
+        param: true,
     },
 ];

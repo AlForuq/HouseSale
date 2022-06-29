@@ -1,30 +1,39 @@
-import React, { useState } from 'react'
+import React, {useState } from 'react'
 import { Popover, Select } from 'antd'
 import { Button, Input } from '../Generics'
 import { Advanced, Container, Icon, Section } from './style'
-import  UseReplace from '../../Hooks/useReplace'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { useSearch } from '../../Hooks/useSearch'
+
+import { UseSearch } from '../../Hooks/useSearch'
+import { UseReplace } from '../../Hooks/useReplace'
 
 const { Option } = Select;
 const { REACT_APP_BASE_URL: url } = process.env
 
 export const Filter = () => {
-  const query = useSearch()
-  const [value, setValue] = useState(query.get('category_id'))
-  
+  const query = UseSearch()
+  const [valu, setValue] = useState(query.get('category_id'))
+
+
+
   const navigate = useNavigate()
-  
+
 
   const Onchange = ({ target }) => {
-    const { value, name } = target;
-    // console.log(useReplace(name, value))
-    // console.log(value, name)
+
+  const { value, name } = target;
+    console.log(UseReplace(name, value))
+    // console.log(name, value)
+    // UseReplace(name, value)
     navigate(`${UseReplace(name, value)}`)
+
   }
 
-  const { data } = useQuery(
+
+
+  /* getting Category list NAME with <Select/> in Filter */
+ const {data, refetch} = useQuery(
     'getHouses',
     () =>
       fetch(`${url}/api/v1/categories/list`, {
@@ -36,20 +45,24 @@ export const Filter = () => {
     ,
     {
       onSuccess: (res) => {
-        // console.log(res, 'filterres')
-      }
+        // console.log(res, 'res filter');
+      
+      },
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
     }
   );
 
 
   // console.log(data, 'dataa')
-
+    
   const onSelect = (id) => {
-    // console.log(id);
     setValue(id)
-    navigate(`/properties/${UseReplace('category_id', id)}`)
+    navigate(`${UseReplace('category_id', id)}`)
+    refetch()
   }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+
   const advancedSearch = (
     <Advanced>
       <Advanced.Title>Adress</Advanced.Title>
@@ -66,27 +79,29 @@ export const Filter = () => {
         <Input onChang={Onchange} name='house_name' placeholder={'House Name'} />
         <Input onChang={Onchange} name='room' placeholder={'Rooms'} />
       </Section>
- 
+
       <Advanced.Title>Price</Advanced.Title>
+
       <Section>
         <Input onChang={Onchange} name='min-price' placeholder={'Min price'} />
         <Input onChang={Onchange} name='max-price' placeholder={'Max price'} />
 
         <Select
-          style={{ minWidth: '131px', height:'44px'}}
+          style={{ minWidth: '131px', height: '44px' }}
           name='' id=''
-          value={Number(value)}
+          value={Number(valu) || 'Category'}
           onChange={onSelect}
         >
-          
+
           {data?.data?.map(value => {
             return (
               <Option key={value.id} value={value.id}>{value?.name}</Option>
             )
-          })} 
+          })}
         </Select>
         
-      </Section>  
+      </Section>
+
       <Section>
         <Button width={'131px'} ml={20} type='primary' >
           Search
@@ -98,25 +113,25 @@ export const Filter = () => {
     </Advanced>
   )
   return (
-    <div className='center' >  
-        <Container>
-          <Input pl={'50px'} placeholder={'Enter an address, neighborhood, city, or ZIP code'} >
-            <Icon.Home/>
-          </Input>
-          
-          <Popover placement='bottomRight' content={advancedSearch} trigger='click' >
-            <Button width={'131px'}  type={'secondary'}>
-              <Icon.Setting />
-              Advanced
-            </Button>
-          </Popover>
+    <div className='center' >
+      <Container>
+        <Input pl={'50px'} placeholder={'Enter an address, neighborhood, city, or ZIP code'} >
+          <Icon.Home />
+        </Input>
 
-          <Button width={'131px'}  type={'primary'}>
-            <Icon.Search/> 
-            Search
+        <Popover placement='bottomRight' content={advancedSearch} trigger='click' >
+          <Button width={'131px'} type={'secondary'}>
+            <Icon.Setting />
+            Advanced
           </Button>
-          
-        </Container>
+        </Popover>
+
+        <Button width={'131px'} type={'primary'}>
+          <Icon.Search />
+          Search
+        </Button>
+
+      </Container>
     </div>
   )
 }

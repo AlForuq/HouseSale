@@ -21,7 +21,7 @@ export const Cards = styled.div`
     width: 87%
 `
 
-export const ArrowLeft = styled.div` 
+export const ArrowRight = styled.div` 
     position: absolute;
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@ export const ArrowLeft = styled.div`
     }
 `
 
-export const ArrowRight = styled(ArrowLeft)`
+export const ArrowLeft = styled(ArrowRight)`
     left: 0px;
     transform: translate(60%, -100%);
     padding-left: 0;

@@ -37,3 +37,12 @@ export const Body = styled.div`
     padding: 0 130px;
     max-width: var(--width);
 `
+
+
+export const Message = styled.div` 
+display: flex;
+justify-content: center;
+font-size: 28px;
+font-family: sans-serif;
+font-weight: 500;
+`

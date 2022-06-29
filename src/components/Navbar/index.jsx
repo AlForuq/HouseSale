@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     Wrapper, NavbarWrapper,
     Logo, NavbarBody, Container, activeStyle
@@ -7,13 +7,26 @@ import {
 
 import { navbar } from '../../utilis/Navbar';
 import  Button  from '../Generics/Button';
+import { Footer } from '../Footer';
 
 export const Navbar = () => {
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const gotoLogin = () => {
+    const LogIn = () => {
         navigate('/signin')
     }
+
+    const LogOut = () => {
+        localStorage.removeItem('token')
+        if (location?.pathname?.includes('profile')) {
+            navigate('/home')
+        }
+        else {
+            navigate('/signin')
+        }
+    }
+
 
     return (
         <Wrapper>
@@ -33,12 +46,17 @@ export const Navbar = () => {
                         })}
                     </NavbarBody>
                     <Logo>
-                        <Button onClick={gotoLogin} width={'120px'} >Signin</Button>
+                        {localStorage.getItem('token') ? (
+                            <>
+                                <Button onClick={()=> navigate('/profile/properties')} mr={20} width={'131px'} >Profile</Button>
+                                <Button onClick={LogOut} width={'131px'} >Log out</Button>
+                            </>
+                        ) : <Button onClick={LogIn} width={'120px'} >Log in</Button> }
                     </Logo>
                 </NavbarWrapper>
             </Container >
             <Outlet />
-
+            <Footer/>
         </Wrapper >
 
     )

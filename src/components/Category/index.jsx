@@ -12,25 +12,29 @@ export const Categories = () => {
     const navigate = useNavigate()
     const [item, setItem] = useState([])
 
-    const onSelect = (value) => {
-        navigate(`/properties?category_id=${value}`)
+    const onSelect = (id) => {
+        navigate(`/properties?category_id=${id}`)
     }
 
+
+  /* getting category's NAME [Villa, Hovli and others] in Card */
     useQuery(
         '',
         () => {
-            return fetch(`${url}/api/v1/categories/list`).then((res)=> res.json())
+            return fetch(`${url}/api/v1/categories/list`).then((res) => res.json())
         },
         
         {
             // refetchOnWindowFocus: false
             onSuccess: (res) => {
-                let list = res?.data?.map((value, index) => {
-                    console.log(res, 'ResCAT')
-                    return <Card onClick={()=> onSelect(value.id)} title={value.name} />
+                // console.log(res, 'ResCAT')
+                let list = res?.data?.map((value) => {
+                    return <Card onClick={()=> onSelect(value.id)} title={value?.name}/>
                 })  
                 setItem(list)
-            }
+            },
+            refetchOnWindowFocus: false,
+            keepPreviousData: true,
         }
     );
     const slider = useRef()
@@ -47,14 +51,6 @@ export const Categories = () => {
             <Wrapper>
                 <Cards>
                     <AliceCarousel
-                        responsive={{
-                            0: {
-                                items: 1,
-                            },
-                            1024: {
-                                items: 3,
-                            },
-                        }}
                         ref={slider}
                         items={item}
                         arrows={false}

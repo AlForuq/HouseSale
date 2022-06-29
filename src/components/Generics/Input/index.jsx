@@ -15,7 +15,8 @@ const Input = ({
     placeholder,
     deafaultValue,
     value,
-    name
+    name,
+    borderr
 }) => {
     return (
         <Wrapper mr={mr} ml={ml} mb={mb} mt={mt} >
@@ -26,7 +27,8 @@ const Input = ({
                 onChange={onChang}
                 deafaultValue={deafaultValue}
                 pl={pl}
-
+                
+                borderr={borderr}
                 type={type}
                 width={width}
                 height={height}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Filter } from '../Filter'
-import { Body, Container, Wrapper } from './style'
+import { Body, Container, Message, Wrapper } from './style'
 import { HouseCard } from '../HouseCard'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSearch } from '../../Hooks/useSearch'
+import { UseSearch } from '../../Hooks/useSearch'
 
 
 
@@ -13,11 +13,17 @@ const { REACT_APP_BASE_URL: url } = process.env
 
 
 export const Propeties = () => {
+
+
+  const navigate = useNavigate()
+  const { search } = useLocation();
+
+
   const [title, setTitle] = useState('Properties')
   const [data, setData] = useState([]);
-  const { search } = useLocation();
-  const navigate = useNavigate()
-  const query = useSearch()
+
+  const query = UseSearch()
+  console.log(query.get('category_id'), 'query-get')
 
   useEffect(() => {
     if (!query.get('category_id')) {
@@ -27,6 +33,8 @@ export const Propeties = () => {
   }, [query.get('category_id')])
 
 
+
+  //for searching the properties according to region, category and any others
   useQuery(
     ['getHouses', search],
     () =>
@@ -34,15 +42,21 @@ export const Propeties = () => {
     {
       onSuccess: (res) => {
         // console.log(res, 'resProp');
-        setData(res.data || []);
-      }
+        setData(res || []);
+      },
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
     }
   );
 
-  const { isLoading, isRefetching } = useQuery(
+
+
+  // Naming the title of page according to "Categories" when Clicked on certain category
+  const { isLoading, isRefetching,} = useQuery(
     'getHome',
     () =>
       query.get('category_id') && fetch(`${url}/api/v1/categories/${query.get('category_id')}`, {
+        method: 'get',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -50,14 +64,20 @@ export const Propeties = () => {
     ,
     {
       onSuccess: (res) => {
+        // refetch()
         // console.log(res, query.get('category_id'), 'title');
         query.get('category_id') && setTitle(res?.data?.name || 'Properties')
-      }
+      },
+      refetchOnWindowFocus: false,
+      keepPreviousData: true,
+      // refetchOnMount: true, 
     }
   );
 
+
+
   const onClick = (id) => {
-    navigate(`/properties/:${id}`)
+    navigate(`/properties/${id}`)
   }
 
   return (
@@ -72,9 +92,11 @@ export const Propeties = () => {
         </Wrapper>
 
         <Body>
-          {data.map((value) => {
+          {data?.data != null ? data?.data.map((value) => {
             return <HouseCard onClick={() => onClick(value?.id)} key={value.id} info={value} />
-          })}
+          }) :
+            <Message>{data.message} </Message>}
+
         </Body>
       </Container>
     </div>

@@ -11,7 +11,7 @@ const getType = (type) => {
             return {
                 background: '#0061DF',
                 color: '#FFFFFF',
-                border: 'none',
+                border: 'none'
             };
         default:
             return {
@@ -21,7 +21,7 @@ const getType = (type) => {
 
     }
 }
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export const Container = styled.div`
     display: flex;
 
@@ -36,7 +36,7 @@ export const Container = styled.div`
     align-items: center;
     height: ${({ height }) => height || '44px'};
     min-width: ${({ width }) => (width ? width : '100%')};
-    width: ${({ width }) => (width ? width : '100%')};
+    width: ${({ width }) => typeof width === 'string' ? width : `${width}px`};
     margin-right: ${({ mr }) => `${mr}px`};
     margin-left: ${({ ml }) => `${ml}px`};
     margin-top: ${({ mt }) => `${mt}px`};
