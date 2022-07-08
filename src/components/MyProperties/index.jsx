@@ -32,7 +32,7 @@ export const MyProperties = () => {
     <Container>
       <h1>My Properies</h1>
       <Button onClick={()=> navigate('/profile/add')} type='primary' width={'131px'}>Add House</Button>
-      {data?.data.map(value=> <HouseCard key={value.id} info={value} />)}
+      {data?.data?.map(value=> <HouseCard key={value.id} info={value} />)}
     </Container>
   )
 }
